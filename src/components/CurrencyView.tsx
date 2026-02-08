@@ -110,13 +110,13 @@ function CurrencyView() {
               type="text"
               value={input1}
               onChange={handleInput1Change}
-              style={{ width: 'calc(50% - 2px)', fontSize: '16px', padding: '8px', boxSizing: 'border-box' }}
+              style={{ width: 'calc(80% - 2px)', fontSize: '16px', padding: '8px', boxSizing: 'border-box' }}
               placeholder="금액"
               inputMode="decimal"
             />
             <select value={country1} onChange={handleCountry1Change} style={{ width: 'calc(50% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
               {countries.map(c => (
-                <option key={c.code} value={c.code}>{c.name} ({c.currency})</option>
+                <option key={c.code} value={c.code}>{c.currency}</option>
               ))}
             </select>
           </div>
@@ -125,13 +125,13 @@ function CurrencyView() {
               type="text"
               value={input2}
               onChange={handleInput2Change}
-              style={{ width: 'calc(50% - 2px)', fontSize: '16px', padding: '8px', boxSizing: 'border-box' }}
+              style={{ width: 'calc(80% - 2px)', fontSize: '16px', padding: '8px', boxSizing: 'border-box' }}
               placeholder="금액"
               inputMode="decimal"
             />
             <select value={country2} onChange={handleCountry2Change} style={{ width: 'calc(50% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
               {countries.map(c => (
-                <option key={c.code} value={c.code}>{c.name} ({c.currency})</option>
+                <option key={c.code} value={c.code}>{c.currency}</option>
               ))}
             </select>
           </div>
@@ -140,13 +140,13 @@ function CurrencyView() {
               type="text"
               value={input3}
               onChange={handleInput3Change}
-              style={{ width: 'calc(50% - 2px)', fontSize: '16px', padding: '8px', boxSizing: 'border-box' }}
+              style={{ width: 'calc(80% - 2px)', fontSize: '16px', padding: '8px', boxSizing: 'border-box' }}
               placeholder="금액"
               inputMode="decimal"
             />
             <select value={country3} onChange={handleCountry3Change} style={{ width: 'calc(50% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
               {countries.map(c => (
-                <option key={c.code} value={c.code}>{c.name} ({c.currency})</option>
+                <option key={c.code} value={c.code}>{c.currency}</option>
               ))}
             </select>
           </div>
