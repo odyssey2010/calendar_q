@@ -126,8 +126,8 @@ function CalendarView() {
               key={'prev-' + idx}
               style={{
                 flex: '1 0 14%',
-                minHeight: 48,
-                maxHeight: 64,
+                minHeight: 96,
+                maxHeight: 96,
                 textAlign: 'center',
                 marginBottom: 2,
                 borderRadius: 6,
@@ -151,8 +151,8 @@ function CalendarView() {
                 key={day}
                 style={{
                   flex: '1 0 14%',
-                  minHeight: 48,
-                  maxHeight: 64,
+                  minHeight: 96,
+                  maxHeight: 96,
                   textAlign: 'center',
                   marginBottom: 2,
                   borderRadius: 6,
@@ -170,7 +170,7 @@ function CalendarView() {
                   boxSizing: 'border-box',
                 }}
               >
-                <div style={{ fontSize: 10, color: '#1976d2', minHeight: 12, marginBottom: 2, whiteSpace: 'pre-line', lineHeight: 1.1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <div style={{ position: 'absolute', left: 4, right: 4, bottom: 12, fontSize: 10, color: '#1976d2', whiteSpace: 'pre-line', lineHeight: 1.1, overflow: 'hidden', textOverflow: 'ellipsis', textAlign: 'center' }}>
                   {korHolidays.map(h => h.name).join('\n')}
                   {uaeHolidays.length > 0 && korHolidays.length > 0 ? '\n' : ''}
                   {uaeHolidays.map(h => h.name).join('\n')}
@@ -193,8 +193,8 @@ function CalendarView() {
               key={'next-' + idx}
               style={{
                 flex: '1 0 14%',
-                minHeight: 48,
-                maxHeight: 64,
+                minHeight: 96,
+                maxHeight: 96,
                 textAlign: 'center',
                 marginBottom: 2,
                 borderRadius: 6,
