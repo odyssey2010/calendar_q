@@ -200,7 +200,7 @@ function CurrencyView() {
       )}
       
       {/* 키패드 */}
-      <div style={{ marginTop: '16px', background: '#f5f5f5', borderRadius: '8px', padding: '12px' }}>
+      <div style={{ marginTop: 0, background: '#f5f5f5', borderRadius: '8px', padding: 0 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
           {['7', '8', '9', '/'].map(key => (
             <button
