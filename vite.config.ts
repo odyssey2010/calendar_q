@@ -8,6 +8,32 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      workbox: {
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.exchangerate-api\.com\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'exchangerate-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 24 * 60 * 60, // 24시간
+              },
+            },
+          },
+          {
+            urlPattern: /^https:\/\/date\.nager\.net\/.*/i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'holidays-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 7 * 24 * 60 * 60, // 7일
+              },
+            },
+          },
+        ],
+      },
       manifest: {
         name: 'CalendarQ',
         short_name: 'CalendarQ',
