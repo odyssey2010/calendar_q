@@ -94,23 +94,23 @@ function CalendarView() {
   const holidayDays2 = getHolidayDays(holidays2);
 
   return (
-    <div style={{ maxWidth: 480, margin: '0 auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: 16 }}>
+    <div style={{ width: '100%', margin: '0 auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: 8, boxSizing: 'border-box' }}>
       {/* 상단: 날짜, 월, 년, < > 버튼 */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-        <button onClick={prevMonth} style={{ fontSize: 20, padding: '4px 12px' }}>{'<'}</button>
-        <div style={{ fontSize: 18, fontWeight: 600 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
+        <button onClick={prevMonth} style={{ fontSize: 18, padding: '4px 12px' }}>{'<'}</button>
+        <div style={{ fontSize: 16, fontWeight: 600 }}>
           {curYear}년 {curMonth + 1}월
         </div>
-        <button onClick={nextMonth} style={{ fontSize: 20, padding: '4px 12px' }}>{'>'}</button>
+        <button onClick={nextMonth} style={{ fontSize: 18, padding: '4px 12px' }}>{'>'}</button>
       </div>
       {/* 오늘 날짜 */}
-      <div style={{ textAlign: 'center', marginBottom: 8, color: '#1976d2', fontWeight: 500 }}>
+      <div style={{ textAlign: 'center', marginBottom: 8, color: '#1976d2', fontWeight: 500, fontSize: '0.9rem' }}>
         오늘: {today.getFullYear()}년 {today.getMonth() + 1}월 {today.getDate()}일
       </div>
       {/* 요일 헤더 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
         {weekDays.map(day => (
-          <div key={day} style={{ flex: 1, textAlign: 'center', fontWeight: 600, color: '#888' }}>{day}</div>
+          <div key={day} style={{ flex: 1, textAlign: 'center', fontWeight: 600, color: '#888', fontSize: '0.85rem' }}>{day}</div>
         ))}
       </div>
       {/* 날짜 그리드 */}
@@ -126,13 +126,15 @@ function CalendarView() {
               key={'prev-' + idx}
               style={{
                 flex: '1 0 14%',
-                height: 32,
+                minHeight: 48,
+                maxHeight: 64,
                 textAlign: 'center',
-                marginBottom: 4,
+                marginBottom: 2,
                 borderRadius: 6,
                 background: '#f0f0f0',
                 color: '#bbb',
                 fontWeight: 400,
+                fontSize: '0.85rem',
               }}
             >
               {date.getDate()}
@@ -149,9 +151,10 @@ function CalendarView() {
                 key={day}
                 style={{
                   flex: '1 0 14%',
-                  height: 64,
+                  minHeight: 48,
+                  maxHeight: 64,
                   textAlign: 'center',
-                  marginBottom: 4,
+                  marginBottom: 2,
                   borderRadius: 6,
                   background: isHoliday(date) ? '#ffe0e0' : '#f5f5f5',
                   color: isHoliday(date) ? '#d32f2f' : '#333',
@@ -164,22 +167,23 @@ function CalendarView() {
                   paddingBottom: 0,
                   border: isToday ? '2px solid #1976d2' : undefined,
                   boxShadow: isToday ? '0 0 0 2px #90caf9' : undefined,
+                  boxSizing: 'border-box',
                 }}
               >
-                <div style={{ fontSize: 12, color: '#1976d2', minHeight: 16, marginBottom: 2, whiteSpace: 'pre-line', lineHeight: 1.2 }}>
+                <div style={{ fontSize: 10, color: '#1976d2', minHeight: 12, marginBottom: 2, whiteSpace: 'pre-line', lineHeight: 1.1, overflow: 'hidden', textOverflow: 'ellipsis' }}>
                   {korHolidays.map(h => h.name).join('\n')}
                   {uaeHolidays.length > 0 && korHolidays.length > 0 ? '\n' : ''}
                   {uaeHolidays.map(h => h.name).join('\n')}
                 </div>
                 <div style={{ position: 'absolute', left: 0, right: 0, bottom: 2, height: 6, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
                   {korHolidays.length > 0 && (
-                    <div style={{ height: 5, width: '100%', background: '#1976d2', borderRadius: 2 }} title={korHolidays.map(h => h.name).join(', ')}></div>
+                    <div style={{ height: 4, width: '100%', background: '#1976d2', borderRadius: 2 }} title={korHolidays.map(h => h.name).join(', ')}></div>
                   )}
                   {uaeHolidays.length > 0 && (
-                    <div style={{ height: 5, width: '100%', background: '#d32f2f', borderRadius: 2, marginLeft: korHolidays.length > 0 ? 2 : 0 }} title={uaeHolidays.map(h => h.name).join(', ')}></div>
+                    <div style={{ height: 4, width: '100%', background: '#d32f2f', borderRadius: 2, marginLeft: korHolidays.length > 0 ? 2 : 0 }} title={uaeHolidays.map(h => h.name).join(', ')}></div>
                   )}
                 </div>
-                <div style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 'auto', marginTop: 2 }}>{day}</div>
+                <div style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 'auto', marginTop: 2 }}>{day}</div>
               </div>
             );
           })}
@@ -189,13 +193,15 @@ function CalendarView() {
               key={'next-' + idx}
               style={{
                 flex: '1 0 14%',
-                height: 32,
+                minHeight: 48,
+                maxHeight: 64,
                 textAlign: 'center',
-                marginBottom: 4,
+                marginBottom: 2,
                 borderRadius: 6,
                 background: '#f0f0f0',
                 color: '#bbb',
                 fontWeight: 400,
+                fontSize: '0.85rem',
               }}
             >
               {date.getDate()}

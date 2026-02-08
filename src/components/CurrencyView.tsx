@@ -97,54 +97,54 @@ function CurrencyView() {
   };
 
   return (
-    <div style={{ padding: '16px' }}>
-      <h3 style={{ marginBottom: '16px' }}>환율 변환</h3>
+    <div style={{ padding: '8px' }}>
+      <h3 style={{ marginBottom: '12px', fontSize: '1.1rem' }}>환율 변환</h3>
       {loading ? (
         <div style={{ textAlign: 'center', color: '#888' }}>환율 정보를 불러오는 중...</div>
       ) : error ? (
-        <div style={{ textAlign: 'center', color: 'red' }}>{error}</div>
+        <div style={{ textAlign: 'center', color: 'red', fontSize: '0.9rem' }}>{error}</div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', gap: '4px', alignItems: 'center', flexWrap: 'wrap' }}>
             <input
               type="text"
               value={input1}
               onChange={handleInput1Change}
-              style={{ flex: 1, fontSize: '18px', padding: '8px' }}
-              placeholder="금액을 입력하세요"
+              style={{ flex: '1 1 120px', fontSize: '16px', padding: '8px', minWidth: '100px', boxSizing: 'border-box' }}
+              placeholder="금액"
               inputMode="decimal"
             />
-            <select value={country1} onChange={handleCountry1Change} style={{ fontSize: '16px', padding: '8px' }}>
+            <select value={country1} onChange={handleCountry1Change} style={{ fontSize: '14px', padding: '8px', minWidth: '140px' }}>
               {countries.map(c => (
                 <option key={c.code} value={c.code}>{c.name} ({c.currency})</option>
               ))}
             </select>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '4px', alignItems: 'center', flexWrap: 'wrap' }}>
             <input
               type="text"
               value={input2}
               onChange={handleInput2Change}
-              style={{ flex: 1, fontSize: '18px', padding: '8px' }}
-              placeholder="금액을 입력하세요"
+              style={{ flex: '1 1 120px', fontSize: '16px', padding: '8px', minWidth: '100px', boxSizing: 'border-box' }}
+              placeholder="금액"
               inputMode="decimal"
             />
-            <select value={country2} onChange={handleCountry2Change} style={{ fontSize: '16px', padding: '8px' }}>
+            <select value={country2} onChange={handleCountry2Change} style={{ fontSize: '14px', padding: '8px', minWidth: '140px' }}>
               {countries.map(c => (
                 <option key={c.code} value={c.code}>{c.name} ({c.currency})</option>
               ))}
             </select>
           </div>
-          <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: '4px', alignItems: 'center', flexWrap: 'wrap' }}>
             <input
               type="text"
               value={input3}
               onChange={handleInput3Change}
-              style={{ flex: 1, fontSize: '18px', padding: '8px' }}
-              placeholder="금액을 입력하세요"
+              style={{ flex: '1 1 120px', fontSize: '16px', padding: '8px', minWidth: '100px', boxSizing: 'border-box' }}
+              placeholder="금액"
               inputMode="decimal"
             />
-            <select value={country3} onChange={handleCountry3Change} style={{ fontSize: '16px', padding: '8px' }}>
+            <select value={country3} onChange={handleCountry3Change} style={{ fontSize: '14px', padding: '8px', minWidth: '140px' }}>
               {countries.map(c => (
                 <option key={c.code} value={c.code}>{c.name} ({c.currency})</option>
               ))}

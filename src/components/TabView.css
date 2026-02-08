@@ -5,7 +5,8 @@
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  padding: 16px;
+  padding: 12px;
+  box-sizing: border-box;
 }
 .tabview-tabs {
   display: flex;
@@ -28,9 +29,10 @@
 }
 .tabview-content {
   min-height: 420px; /* 충분한 높이로 flickering 방지 */
-  padding: 16px;
+  padding: 12px;
   background: #fafafa;
   border-radius: 0 0 8px 8px;
   transition: min-height 0.2s, background 0.2s;
   box-sizing: border-box;
+  overflow-x: auto;
 }
