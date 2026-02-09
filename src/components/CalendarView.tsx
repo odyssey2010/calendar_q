@@ -94,7 +94,7 @@ function CalendarView() {
   const holidayDays2 = getHolidayDays(holidays2);
 
   return (
-    <div style={{ width: '100%', margin: '0 auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: 8, boxSizing: 'border-box' }}>
+    <div style={{ width: '100%', margin: '0 auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: 0, boxSizing: 'border-box' }}>
       {/* 상단: 날짜, 월, 년, < > 버튼 */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <button onClick={prevMonth} style={{ fontSize: 18, padding: '4px 12px' }}>{'<'}</button>
