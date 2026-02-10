@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { fetchHolidays } from '../utils/fetchHolidays';
 
-const weekDays = ['일', '월', '화', '수', '목', '금', '토'];
+const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 function getMonthDays(year: number, month: number) {
   const lastDay = new Date(year, month + 1, 0);
@@ -29,7 +29,7 @@ function CalendarView() {
   const today = new Date();
   const [curYear, setCurYear] = useState(today.getFullYear());
   const [curMonth, setCurMonth] = useState(today.getMonth()); // 0-indexed
-  // 국가 코드 예시: KR, AE
+  // Example country codes: KR, AE
   const [country1] = useState('KR');
   const [country2] = useState('AE');
   const [holidays1, setHolidays1] = useState<{ date: string, localName: string }[]>([]);
@@ -40,11 +40,16 @@ function CalendarView() {
   const days = getMonthDays(curYear, curMonth);
   const firstWeekDay = days[0].getDay();
   const lastWeekDay = days[days.length - 1].getDay();
+  const todayLabel = today.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
 
-  // 휴일 샘플 (일요일만 표시)
+  // Sample holiday highlight (Sundays only)
   const isHoliday = (date: Date) => date.getDay() === 0;
 
-  // 월 이동
+  // Month navigation
   const prevMonth = () => {
     if (curMonth === 0) {
       setCurYear(curYear - 1);
@@ -62,7 +67,7 @@ function CalendarView() {
     }
   };
 
-  // 휴일 fetch
+  // Fetch holidays
   useEffect(() => {
     setLoading(true);
     setError('');
@@ -76,12 +81,12 @@ function CalendarView() {
         setLoading(false);
       })
       .catch(e => {
-        setError('휴일 정보를 가져오지 못했습니다' + (e instanceof Error ? e.message : ''));
+        setError('Failed to load holiday information.' + (e instanceof Error ? ` ${e.message}` : ''));
         setLoading(false);
       });
   }, [curYear, country1, country2]);
 
-  // 월별 휴일 날짜 추출
+  // Extract holidays for the current month
   const getHolidayDays = (holidays: { date: string, localName: string }[]) => {
     return holidays
       .filter(h => {
@@ -95,32 +100,32 @@ function CalendarView() {
 
   return (
     <div style={{ width: '100%', margin: '0 auto', background: '#fff', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)', padding: 0, boxSizing: 'border-box' }}>
-      {/* 상단: 날짜, 월, 년, < > 버튼 */}
+      {/* Header: date, month, year, < > buttons */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
         <button onClick={prevMonth} style={{ fontSize: 18, padding: '4px 12px' }}>{'<'}</button>
         <div style={{ fontSize: 16, fontWeight: 600 }}>
-          {curYear}년 {curMonth + 1}월
+          {curYear} {curMonth + 1}
         </div>
         <button onClick={nextMonth} style={{ fontSize: 18, padding: '4px 12px' }}>{'>'}</button>
       </div>
-      {/* 오늘 날짜 */}
-      <div style={{ textAlign: 'center', marginBottom: 8, color: '#1976d2', fontWeight: 500, fontSize: '0.9rem' }}>
-        오늘: {today.getFullYear()}년 {today.getMonth() + 1}월 {today.getDate()}일
+      {/* Today */}
+      <div style={{ textAlign: 'center', marginBottom: 8, color: '#1976d2', fontWeight: 500, fontSize: '1.08rem' }}>
+        Today: {todayLabel}
       </div>
-      {/* 요일 헤더 */}
+      {/* Weekday header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
         {weekDays.map(day => (
           <div key={day} style={{ flex: 1, textAlign: 'center', fontWeight: 600, color: '#888', fontSize: '0.85rem' }}>{day}</div>
         ))}
       </div>
-      {/* 날짜 그리드 */}
+      {/* Date grid */}
       {loading ? (
-        <div style={{ textAlign: 'center', color: '#888' }}>휴일 정보를 불러오는 중...</div>
+        <div style={{ textAlign: 'center', color: '#888' }}>Loading holiday information...</div>
       ) : error ? (
         <div style={{ textAlign: 'center', color: 'red' }}>{error}</div>
       ) : (
         <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-          {/* 첫째 주 빈칸: 이전달 날짜 흐린색 */}
+          {/* First week blanks: previous month dates (dimmed) */}
           {getPrevMonthDays(curYear, curMonth, firstWeekDay).map((date, idx) => (
             <div
               key={'prev-' + idx}
@@ -134,13 +139,13 @@ function CalendarView() {
                 background: '#f0f0f0',
                 color: '#bbb',
                 fontWeight: 400,
-                fontSize: '0.85rem',
+                fontSize: '1.275rem',
               }}
             >
               {date.getDate()}
             </div>
           ))}
-          {/* 이번달 날짜 */}
+          {/* Current month dates */}
           {days.map(date => {
             const day = date.getDate();
             const korHolidays = holidayDays1.filter(h => h.day === day);
@@ -183,11 +188,11 @@ function CalendarView() {
                     <div style={{ height: 4, width: '100%', background: '#d32f2f', borderRadius: 2, marginLeft: korHolidays.length > 0 ? 2 : 0 }} title={uaeHolidays.map(h => h.name).join(', ')}></div>
                   )}
                 </div>
-                <div style={{ fontSize: 14, fontWeight: 'bold', marginBottom: 'auto', marginTop: 2 }}>{day}</div>
+                <div style={{ fontSize: 21, fontWeight: 'bold', marginBottom: 'auto', marginTop: 2 }}>{day}</div>
               </div>
             );
           })}
-          {/* 마지막 주 빈칸: 다음달 날짜 흐린색 */}
+          {/* Last week blanks: next month dates (dimmed) */}
           {getNextMonthDays(curYear, curMonth, 6 - lastWeekDay).map((date, idx) => (
             <div
               key={'next-' + idx}
@@ -201,7 +206,7 @@ function CalendarView() {
                 background: '#f0f0f0',
                 color: '#bbb',
                 fontWeight: 400,
-                fontSize: '0.85rem',
+                fontSize: '1.275rem',
               }}
             >
               {date.getDate()}

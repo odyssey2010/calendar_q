@@ -202,16 +202,16 @@ function CurrencyView() {
       {/* 키패드 */}
       <div style={{ marginTop: 0, background: '#f5f5f5', borderRadius: '8px', padding: 0 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
-          {['7', '8', '9', '/'].map(key => (
+          {[{ label: '7', value: '7' }, { label: '8', value: '8' }, { label: '9', value: '9' }, { label: '÷', value: '/' }].map(key => (
             <button
-              key={key}
-              onClick={() => handleKeypadPress(key)}
+              key={key.value}
+              onClick={() => handleKeypadPress(key.value)}
               style={{ 
                 padding: '16px 8px', 
-                fontSize: '18px', 
+                fontSize: ['+', '-', '*', '/'].includes(key.value) ? '27px' : '18px', 
                 fontWeight: '600',
-                background: ['+', '-', '*', '/'].includes(key) ? '#ff9800' : '#fff',
-                color: ['+', '-', '*', '/'].includes(key) ? '#fff' : '#333',
+                background: ['+', '-', '*', '/'].includes(key.value) ? '#ff9800' : '#fff',
+                color: ['+', '-', '*', '/'].includes(key.value) ? '#fff' : '#333',
                 border: 'none',
                 borderRadius: '6px',
                 cursor: 'pointer',
@@ -222,19 +222,19 @@ function CurrencyView() {
               onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              {key}
+              {key.label}
             </button>
           ))}
-          {['4', '5', '6', '*'].map(key => (
+          {[{ label: '4', value: '4' }, { label: '5', value: '5' }, { label: '6', value: '6' }, { label: '×', value: '*' }].map(key => (
             <button
-              key={key}
-              onClick={() => handleKeypadPress(key)}
+              key={key.value}
+              onClick={() => handleKeypadPress(key.value)}
               style={{ 
                 padding: '16px 8px', 
-                fontSize: '18px', 
+                fontSize: ['+', '-', '*', '/'].includes(key.value) ? '27px' : '18px', 
                 fontWeight: '600',
-                background: ['+', '-', '*', '/'].includes(key) ? '#ff9800' : '#fff',
-                color: ['+', '-', '*', '/'].includes(key) ? '#fff' : '#333',
+                background: ['+', '-', '*', '/'].includes(key.value) ? '#ff9800' : '#fff',
+                color: ['+', '-', '*', '/'].includes(key.value) ? '#fff' : '#333',
                 border: 'none',
                 borderRadius: '6px',
                 cursor: 'pointer',
@@ -245,19 +245,19 @@ function CurrencyView() {
               onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              {key}
+              {key.label}
             </button>
           ))}
-          {['1', '2', '3', '-'].map(key => (
+          {[{ label: '1', value: '1' }, { label: '2', value: '2' }, { label: '3', value: '3' }, { label: '−', value: '-' }].map(key => (
             <button
-              key={key}
-              onClick={() => handleKeypadPress(key)}
+              key={key.value}
+              onClick={() => handleKeypadPress(key.value)}
               style={{ 
                 padding: '16px 8px', 
-                fontSize: '18px', 
+                fontSize: ['+', '-', '*', '/'].includes(key.value) ? '27px' : '18px', 
                 fontWeight: '600',
-                background: ['+', '-', '*', '/'].includes(key) ? '#ff9800' : '#fff',
-                color: ['+', '-', '*', '/'].includes(key) ? '#fff' : '#333',
+                background: ['+', '-', '*', '/'].includes(key.value) ? '#ff9800' : '#fff',
+                color: ['+', '-', '*', '/'].includes(key.value) ? '#fff' : '#333',
                 border: 'none',
                 borderRadius: '6px',
                 cursor: 'pointer',
@@ -268,19 +268,19 @@ function CurrencyView() {
               onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              {key}
+              {key.label}
             </button>
           ))}
-          {['C', '0', '.', '+'].map(key => (
+          {[{ label: 'C', value: 'C' }, { label: '0', value: '0' }, { label: '.', value: '.' }, { label: '＋', value: '+' }].map(key => (
             <button
-              key={key}
-              onClick={() => handleKeypadPress(key)}
+              key={key.value}
+              onClick={() => handleKeypadPress(key.value)}
               style={{ 
                 padding: '16px 8px', 
-                fontSize: '18px', 
+                fontSize: ['+', '-', '*', '/'].includes(key.value) ? '27px' : '18px', 
                 fontWeight: '600',
-                background: key === 'C' ? '#f44336' : ['+', '-', '*', '/'].includes(key) ? '#ff9800' : '#fff',
-                color: (key === 'C' || ['+', '-', '*', '/'].includes(key)) ? '#fff' : '#333',
+                background: key.value === 'C' ? '#f44336' : ['+', '-', '*', '/'].includes(key.value) ? '#ff9800' : '#fff',
+                color: (key.value === 'C' || ['+', '-', '*', '/'].includes(key.value)) ? '#fff' : '#333',
                 border: 'none',
                 borderRadius: '6px',
                 cursor: 'pointer',
@@ -291,14 +291,14 @@ function CurrencyView() {
               onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              {key}
+              {key.label}
             </button>
           ))}
           <button
             onClick={() => handleKeypadPress('⌫')}
             style={{ 
               padding: '16px 8px', 
-              fontSize: '18px', 
+              fontSize: '27px', 
               fontWeight: '600',
               background: '#9e9e9e',
               color: '#fff',
@@ -319,7 +319,7 @@ function CurrencyView() {
             onClick={() => handleKeypadPress('=')}
             style={{ 
               padding: '16px 8px', 
-              fontSize: '18px', 
+              fontSize: '27px', 
               fontWeight: '600',
               background: '#4caf50',
               color: '#fff',
