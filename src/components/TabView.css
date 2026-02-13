@@ -29,9 +29,10 @@
 }
 .tabview-content {
   min-height: 420px; /* 충분한 높이로 flickering 방지 */
-  padding: 12px;
-  background: #fafafa;
-  border-radius: 0 0 8px 8px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
   transition: min-height 0.2s, background 0.2s;
   box-sizing: border-box;
   overflow-x: auto;
