@@ -64,7 +64,7 @@ function TimesView() {
         <select
           value={code}
           onChange={e => onChange(e.target.value)}
-          style={{ width: 140, fontSize: 14, padding: '8px', boxSizing: 'border-box', alignItems: 'right' }}
+          style={{ width: '30%', fontSize: 14, padding: '8px', boxSizing: 'border-box'}}
         >
           {timeZones.map(option => (
             <option key={option.code} value={option.code}>

@@ -158,7 +158,7 @@ function CurrencyView() {
               placeholder="금액"
               inputMode="none"
             />
-            <select value={country1} onChange={handleCountry1Change} style={{ width: 'calc(50% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
+            <select value={country1} onChange={handleCountry1Change} style={{ width: 'calc(30% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
               {countries.map(c => (
                 <option key={c.code} value={c.code}>{c.currency}</option>
               ))}
@@ -174,7 +174,7 @@ function CurrencyView() {
               placeholder="금액"
               inputMode="none"
             />
-            <select value={country2} onChange={handleCountry2Change} style={{ width: 'calc(50% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
+            <select value={country2} onChange={handleCountry2Change} style={{ width: 'calc(30% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
               {countries.map(c => (
                 <option key={c.code} value={c.code}>{c.currency}</option>
               ))}
@@ -190,7 +190,7 @@ function CurrencyView() {
               placeholder="금액"
               inputMode="none"
             />
-            <select value={country3} onChange={handleCountry3Change} style={{ width: 'calc(50% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
+            <select value={country3} onChange={handleCountry3Change} style={{ width: 'calc(30% - 2px)', fontSize: '14px', padding: '8px', boxSizing: 'border-box' }}>
               {countries.map(c => (
                 <option key={c.code} value={c.code}>{c.currency}</option>
               ))}
