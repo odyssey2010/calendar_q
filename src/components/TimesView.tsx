@@ -56,7 +56,7 @@ function TimesView() {
     const zone = getZone(code);
     return (
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <div style={{ flex: 1, textAlign: 'left' }}>
+        <div style={{ flex: 1, textAlign: 'left', width: '70%' }}>
           <div style={{ color: '#1976d2', fontWeight: 600, marginBottom: 2 }}>{zone.name}</div>
           <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{formatTime(zone.timeZone)}</div>
           <div style={{ color: '#666', fontSize: '0.9rem' }}>{formatDate(zone.timeZone)}</div>
@@ -64,7 +64,7 @@ function TimesView() {
         <select
           value={code}
           onChange={e => onChange(e.target.value)}
-          style={{ width: 140, fontSize: 14, padding: '8px', boxSizing: 'border-box' }}
+          style={{ width: 140, fontSize: 14, padding: '8px', boxSizing: 'border-box', alignItems: 'right' }}
         >
           {timeZones.map(option => (
             <option key={option.code} value={option.code}>
