@@ -3,10 +3,12 @@ import './TabView.css';
 import CurrencyView from './CurrencyView';
 import CalendarView from './CalendarView';
 import ConfigView from './ConfigView';
+import TimesView from './TimesView';
 
 const tabList = [
   { label: '환율', key: 'exchange' },
   { label: '달력', key: 'calendar' },
+  { label: '시간', key: 'times' },
   { label: '설정', key: 'settings' },
 ];
 
@@ -29,6 +31,7 @@ function TabView() {
       <div className="tabview-content">
         {activeTab === 'exchange' && <CurrencyView />}
         {activeTab === 'calendar' && <CalendarView />}
+        {activeTab === 'times' && <TimesView />}
         {activeTab === 'settings' && <ConfigView />}
       </div>
     </div>
