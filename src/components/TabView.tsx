@@ -5,12 +5,14 @@ import CalendarView from './CalendarView';
 import ConfigView from './ConfigView';
 import TimesView from './TimesView';
 import MemoView from './MemoView';
+import QuizView from './QuizView';
 
 const tabList = [
   { label: '환율', key: 'exchange' },
   { label: '달력', key: 'calendar' },
   { label: '시간', key: 'times' },
   { label: '메모', key: 'memo' },
+  { label: 'Quiz', key: 'quiz' },
   { label: '설정', key: 'settings' },
 ];
 
@@ -35,6 +37,7 @@ function TabView() {
         {activeTab === 'calendar' && <CalendarView />}
         {activeTab === 'times' && <TimesView />}
         {activeTab === 'memo' && <MemoView />}
+        {activeTab === 'quiz' && <QuizView />}
         {activeTab === 'settings' && <ConfigView />}
       </div>
     </div>

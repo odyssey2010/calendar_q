@@ -1,0 +1,294 @@
+/* Content Styling */
+.quiz-view-container .content-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quiz-view-container h2 {
+  color: #333;
+  margin-bottom: 16px;
+  font-size: 24px;
+}
+
+/* Quiz Display */
+.calculator-display {
+  background: linear-gradient(to bottom, #2c2c2c, #1a1a1a);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.quiz-question {
+  color: #fff;
+  font-size: 48px;
+  font-weight: 300;
+  text-align: center;
+  margin-bottom: 16px;
+  letter-spacing: 2px;
+}
+
+.quiz-input {
+  color: #4af;
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+  border-bottom: 2px solid #4af;
+  padding: 8px 16px;
+  min-width: 120px;
+}
+
+.quiz-error {
+  min-height: 22px;
+  margin-top: 8px;
+  color: #ff3b30;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.quiz-feedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 72px;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.quiz-feedback.show {
+  opacity: 1;
+}
+
+.quiz-feedback.correct {
+  color: #34c759;
+}
+
+.quiz-feedback.incorrect {
+  color: #ff3b30;
+}
+
+.quiz-stats {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 16px;
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+}
+
+.stat-value.correct {
+  color: #34c759;
+}
+
+.stat-value.incorrect {
+  color: #ff3b30;
+}
+
+/* Keypad */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.key {
+  background: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 20px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.key:active {
+  transform: scale(0.95);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.key.number {
+  background: #f5f5f5;
+}
+
+.key.operator {
+  background: #ff9500;
+  color: white;
+  font-size: 28px;
+}
+
+.key.operator:active {
+  background: #e38600;
+}
+
+.key.function {
+  background: #d4d4d4;
+  color: #333;
+}
+
+.key.function:active {
+  background: #c0c0c0;
+}
+
+.key.equal {
+  background: #34c759;
+  color: white;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.key.equal:active {
+  background: #2fb84d;
+}
+
+.key.zero {
+  grid-column: span 2;
+}
+
+.key.clear {
+  background: #ff3b30;
+  color: white;
+}
+
+.key.clear:active {
+  background: #e3342f;
+}
+
+.key.submit {
+  background: #34c759;
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+.key.submit:active {
+  background: #2fb84d;
+}
+
+/* Abacus Modal */
+.abacus-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 2000;
+  justify-content: center;
+  align-items: center;
+}
+
+.abacus-modal.show {
+  display: flex;
+}
+
+.abacus-container {
+  background: white;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.abacus-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 16px;
+}
+
+.abacus-canvas {
+  border: 2px solid #333;
+  border-radius: 8px;
+  background: #f9f3e8;
+  margin-bottom: 16px;
+}
+
+.abacus-step {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.abacus-close {
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  background: #007aff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.abacus-close:active {
+  background: #0051d5;
+}
+
+.abacus-button-group {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.abacus-nav-button {
+  padding: 10px 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  background: #666;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  min-width: 44px;
+  text-align: center;
+}
+
+.abacus-nav-button:active {
+  background: #444;
+}
+
+.abacus-nav-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
