@@ -209,6 +209,8 @@ function QuizView() {
   };
 
   const generateCalculationSteps = (n1: number, n2: number, op: '+' | '×') => {
+    // For addition, we will show the steps of adding tens and ones separately, including any carries.
+    // For multiplication, we will show the partial products for each digit of the second number, and then the final result.
     const stepsArray = [];
 
     if (op === '×') {
