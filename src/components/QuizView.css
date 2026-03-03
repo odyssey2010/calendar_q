@@ -7,10 +7,40 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
 .quiz-view-container h2 {
   color: #333;
-  margin-bottom: 16px;
   font-size: 24px;
+  margin: 0;
+}
+
+.quiz-type-select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #333;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  font-weight: 500;
+}
+
+.quiz-type-select:hover {
+  border-color: #007aff;
+}
+
+.quiz-type-select:focus {
+  outline: none;
+  border-color: #007aff;
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
 /* Quiz Display */
@@ -299,9 +329,21 @@
     padding: 12px;
   }
 
-  .quiz-view-container h2 {
-    font-size: 20px;
+  .quiz-header {
+    flex-direction: column;
+    gap: 8px;
     margin-bottom: 12px;
+  }
+
+  .quiz-view-container h2 {
+    font-size: 18px;
+    margin: 0;
+  }
+
+  .quiz-type-select {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 13px;
   }
 
   .calculator-display {

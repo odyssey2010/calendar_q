@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import './QuizView.css';
 
+type QuizType = '2+2' | '3+3' | '2x2' | '3x2' | 'mix';
+
 function QuizView() {
+  const [quizType, setQuizType] = useState<QuizType>('2+2');
   const [num1, setNum1] = useState(0);
   const [num2, setNum2] = useState(0);
+  const [operation, setOperation] = useState<'+' | '×'>('+');
   const [correctAnswer, setCorrectAnswer] = useState(0);
   const [userAnswer, setUserAnswer] = useState('');
   const [correctCount, setCorrectCount] = useState(0);
@@ -32,23 +36,102 @@ function QuizView() {
   // Initialize quiz
   useEffect(() => {
     generateNewQuestion();
-  }, []);
+  }, [quizType]);
 
   const generateRandomTwoDigit = () => {
     return Math.floor(Math.random() * 90) + 10;
   };
 
+  const generateRandomThreeDigit = () => {
+    return Math.floor(Math.random() * 900) + 100;
+  };
+
+  const getMaxAnswerDigits = (type: QuizType): number => {
+    switch (type) {
+      case '2+2':
+        return 3; // max 99 + 99 = 198
+      case '3+3':
+        return 4; // max 999 + 999 = 1998
+      case '2x2':
+        return 4; // max 99 × 99 = 9801
+      case '3x2':
+        return 5; // max 999 × 99 = 98901
+      case 'mix':
+        return 5; // max for mix is 3x2
+      default:
+        return 3;
+    }
+  };
+
+  const getAbacusColumns = (type: QuizType): number => {
+    const maxDigits = getMaxAnswerDigits(type);
+    return Math.min(maxDigits, 6);
+  };
+
   const generateNewQuestion = () => {
-    const n1 = generateRandomTwoDigit();
-    const n2 = generateRandomTwoDigit();
-    const answer = n1 + n2;
+    let n1 = 0;
+    let n2 = 0;
+    let op: '+' | '×' = '+';
+    let answer = 0;
+
+    if (quizType === 'mix') {
+      const randomType = ['2+2', '3+3', '2x2', '3x2'][Math.floor(Math.random() * 4)] as QuizType;
+      generateQuestionByType(randomType);
+      return;
+    }
+
+    generateQuestionByType(quizType);
+  };
+
+  const generateQuestionByType = (type: QuizType) => {
+    let n1 = 0;
+    let n2 = 0;
+    let op: '+' | '×' = '+';
+    let answer = 0;
+
+    switch (type) {
+      case '2+2':
+        n1 = generateRandomTwoDigit();
+        n2 = generateRandomTwoDigit();
+        op = '+';
+        answer = n1 + n2;
+        break;
+      case '3+3':
+        n1 = generateRandomThreeDigit();
+        n2 = generateRandomThreeDigit();
+        op = '+';
+        answer = n1 + n2;
+        break;
+      case '2x2':
+        n1 = generateRandomTwoDigit();
+        n2 = generateRandomTwoDigit();
+        op = '×';
+        answer = n1 * n2;
+        break;
+      case '3x2':
+        n1 = generateRandomThreeDigit();
+        n2 = generateRandomTwoDigit();
+        op = '×';
+        answer = n1 * n2;
+        break;
+    }
 
     setNum1(n1);
     setNum2(n2);
+    setOperation(op);
     setCorrectAnswer(answer);
     setUserAnswer('');
     lastDigitTimeRef.current = 0;
     lastAnswerWasWrongRef.current = false;
+    setQuizError('');
+  };
+
+  const handleQuizTypeChange = (newType: QuizType) => {
+    setQuizType(newType);
+    setCorrectCount(0);
+    setIncorrectCount(0);
+    setTotalCount(0);
+    setUserAnswer('');
     setQuizError('');
   };
 
@@ -62,7 +145,8 @@ function QuizView() {
       lastAnswerWasWrongRef.current = false;
     }
 
-    if (userAnswer.length >= 3) return;
+    const maxDigits = getMaxAnswerDigits(quizType);
+    if (userAnswer.length >= maxDigits) return;
 
     const newAnswer = userAnswer + digit;
     setUserAnswer(newAnswer);
@@ -134,8 +218,53 @@ function QuizView() {
     }
   };
 
-  const generateCalculationSteps = (n1: number, n2: number) => {
+  const generateCalculationSteps = (n1: number, n2: number, op: '+' | '×') => {
     const stepsArray = [];
+
+    if (op === '×') {
+      const result = n1 * n2;
+      const n2Str = n2.toString();
+      
+      stepsArray.push({
+        description: `Multiplying ${n1} × ${n2}`,
+        num1: 0,
+        num2: 0,
+        carry: 0,
+        digit: -1,
+      });
+
+      // Generate partial products for each digit of n2
+      let cumulativeResult = 0;
+      const partialProducts: number[] = [];
+      
+      for (let i = 0; i < n2Str.length; i++) {
+        const digit = parseInt(n2Str[n2Str.length - 1 - i]);
+        const multiplier = Math.pow(10, i);
+        const partialProduct = n1 * digit * multiplier;
+        partialProducts.push(partialProduct);
+        
+        const digitPosition = ['ones', 'tens', 'hundreds'][i];
+        stepsArray.push({
+          description: `${n1} × ${digit} (${digitPosition} place) = ${n1 * digit}`,
+          num1: cumulativeResult,
+          num2: n1 * digit,
+          carry: 0,
+          digit: i,
+        });
+        
+        cumulativeResult += partialProduct;
+      }
+
+      stepsArray.push({
+        description: `Result: ${result}`,
+        num1: 0,
+        num2: result,
+        carry: 0,
+        digit: -1,
+      });
+
+      return stepsArray;
+    }
 
     const num1Str = n1.toString().padStart(2, '0');
     const num2Str = n2.toString().padStart(2, '0');
@@ -195,7 +324,7 @@ function QuizView() {
 
   const showAbacus = () => {
     setQuizError('');
-    const steps = generateCalculationSteps(num1, num2);
+    const steps = generateCalculationSteps(num1, num2, operation);
     setAbacusSteps(steps);
     setCurrentManualStep(0);
     setIsAutoPlaying(true);
@@ -235,23 +364,26 @@ function QuizView() {
   useEffect(() => {
     if (showAbacusModal && canvasRef.current && abacusSteps.length > 0) {
       const step = abacusSteps[currentManualStep];
-      drawAbacus(canvasRef.current, step.num1, step.num2, step.carry, step.digit);
+      drawAbacus(canvasRef.current, step.num1, step.num2, step.carry, step.digit, quizType);
     }
-  }, [showAbacusModal, abacusSteps, currentManualStep]);
+  }, [showAbacusModal, abacusSteps, currentManualStep, quizType]);
 
   const drawAbacus = (
     canvas: HTMLCanvasElement,
     num1Val: number,
     num2Val: number,
     carry: number,
-    currentDigit: number
+    currentDigit: number,
+    type: QuizType
   ) => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const frameWidth = 300;
+    const maxDigits = getMaxAnswerDigits(type);
+    const columnCount = Math.min(maxDigits, 6);
+    const frameWidth = 50 + columnCount * 50;
     const frameHeight = 350;
     const frameX = 25;
     const frameY = 25;
@@ -261,8 +393,13 @@ function QuizView() {
     ctx.lineWidth = 8;
     ctx.strokeRect(frameX, frameY, frameWidth, frameHeight);
 
+    // Calculate rod positions dynamically
+    const rodPositions: number[] = [];
+    for (let i = 0; i < columnCount; i++) {
+      rodPositions.push(50 + i * 50);
+    }
+
     // Draw rods
-    const rodPositions = [100, 150, 200, 250];
     ctx.lineWidth = 3;
     ctx.strokeStyle = '#654321';
 
@@ -281,24 +418,24 @@ function QuizView() {
     ctx.lineTo(frameX + frameWidth - 10, frameY + frameHeight / 2 - 35);
     ctx.stroke();
 
-    // Labels
-    ctx.font = '14px Arial';
+    // Labels for each column
+    ctx.font = '12px Arial';
     ctx.fillStyle = '#333';
     ctx.textAlign = 'center';
-    const labels = ['100s', '10s', '1s'];
-    for (let i = 0; i < 3; i++) {
-      ctx.fillText(labels[i], frameX + rodPositions[i], frameY + frameHeight + 15);
+    const placeValues = ['1s', '10s', '100s', '1000s', '10000s', '100000s'];
+    for (let i = 0; i < columnCount; i++) {
+      ctx.fillText(placeValues[columnCount - 1 - i], frameX + rodPositions[i], frameY + frameHeight + 15);
     }
 
     // Draw beads for result
     const result = num1Val + num2Val + carry;
-    const onesDigit = result % 10;
-    const tensDigit = Math.floor(result / 10) % 10;
-    const hundredsDigit = Math.floor(result / 100);
+    const resultStr = result.toString().padStart(columnCount, '0');
+    const digits: number[] = [];
+    for (let i = 0; i < columnCount; i++) {
+      digits.push(parseInt(resultStr[i]));
+    }
 
-    const digits = [hundredsDigit, tensDigit, onesDigit];
-
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < columnCount; i++) {
       const rodX = frameX + rodPositions[i];
       const value = digits[i];
       const fiveBeadY = value >= 5 ? frameY + frameHeight / 2 - 55 : frameY + 80;
@@ -335,23 +472,41 @@ function QuizView() {
     }
 
     // Highlight current digit
-    if (currentDigit >= 0 && currentDigit < 3) {
-      const highlightIndexMap = [2, 1, 0];
+    if (currentDigit >= 0 && currentDigit < columnCount) {
+      const highlightIndexMap: number[] = [];
+      for (let i = 0; i < columnCount; i++) {
+        highlightIndexMap.push(columnCount - 1 - i);
+      }
       const highlightIndex = highlightIndexMap[currentDigit];
-      ctx.strokeStyle = '#FFD700';
-      ctx.lineWidth = 3;
-      ctx.beginPath();
-      ctx.arc(frameX + rodPositions[highlightIndex], frameY + frameHeight / 2, 40, 0, Math.PI * 2);
-      ctx.stroke();
+      if (highlightIndex >= 0 && highlightIndex < columnCount) {
+        ctx.strokeStyle = '#FFD700';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(frameX + rodPositions[highlightIndex], frameY + frameHeight / 2, 40, 0, Math.PI * 2);
+        ctx.stroke();
+      }
     }
   };
 
   return (
     <div className="quiz-view-container">
       <div className="content-card" style={{ position: 'relative' }}>
-        <h2>
-          <span style={{ display: 'inline-block', transform: 'rotate(-90deg)' }}>🧮</span> Addition Quiz
-        </h2>
+        <div className="quiz-header">
+          <h2>
+            <span style={{ display: 'inline-block', transform: 'rotate(-90deg)' }}>🧮</span> Addition Quiz
+          </h2>
+          <select 
+            className="quiz-type-select" 
+            value={quizType} 
+            onChange={(e) => handleQuizTypeChange(e.target.value as QuizType)}
+          >
+            <option value="2+2">2+2</option>
+            <option value="3+3">3+3</option>
+            <option value="2x2">2x2</option>
+            <option value="3x2">3x2</option>
+            <option value="mix">mix</option>
+          </select>
+        </div>
 
         {/* Quiz Stats */}
         <div className="quiz-stats">
@@ -372,7 +527,7 @@ function QuizView() {
         {/* Quiz Display */}
         <div className="calculator-display">
           <div className="quiz-question">
-            {num1} + {num2}
+            {num1} {operation} {num2}
           </div>
           <div className="quiz-input">{userAnswer || '_'}</div>
           <div className="quiz-error">{quizError}</div>
@@ -444,7 +599,7 @@ function QuizView() {
         <div className="abacus-modal show">
           <div className="abacus-container">
             <div className="abacus-title">
-              {num1} + {num2} = ?
+              {num1} {operation} {num2} = ?
             </div>
             <div className="abacus-step">
               {abacusSteps.length > 0 && abacusSteps[currentManualStep]?.description}
