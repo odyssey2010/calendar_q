@@ -164,6 +164,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  outline: none;
+}
+
+.key:focus,
+.key:focus-visible {
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .key:active {

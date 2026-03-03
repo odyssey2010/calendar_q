@@ -493,7 +493,7 @@ function QuizView() {
       <div className="content-card" style={{ position: 'relative' }}>
         <div className="quiz-header">
           <h2>
-            <span style={{ display: 'inline-block', transform: 'rotate(-90deg)' }}>🧮</span> Addition Quiz
+            <span style={{ display: 'inline-block', transform: 'rotate(-90deg)' }}>🧮</span> Quiz
           </h2>
           <select 
             className="quiz-type-select" 
