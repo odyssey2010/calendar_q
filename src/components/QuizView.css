@@ -292,3 +292,117 @@
   background: #ccc;
   cursor: not-allowed;
 }
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+  .quiz-view-container .content-card {
+    padding: 12px;
+  }
+
+  .quiz-view-container h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .calculator-display {
+    padding: 16px;
+    margin-bottom: 16px;
+    min-height: 120px;
+  }
+
+  .quiz-question {
+    font-size: 36px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .quiz-input {
+    font-size: 28px;
+    padding: 6px 12px;
+    min-width: 100px;
+  }
+
+  .quiz-error {
+    font-size: 12px;
+    margin-top: 6px;
+  }
+
+  .quiz-stats {
+    margin-bottom: 12px;
+    padding: 10px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    margin-bottom: 2px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  /* Keypad - Keep 4 columns */
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .key {
+    padding: 12px 6px;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  }
+
+  .key.submit {
+    font-size: 12px;
+    padding: 10px 4px;
+    line-height: 1.1;
+  }
+
+  .key.submit span {
+    transform: rotate(-90deg) scale(1) !important;
+    display: inline-block;
+    font-size: 14px;
+  }
+
+  .key.zero {
+    grid-column: span 2;
+  }
+
+  .calculator-display {
+    min-height: 110px;
+  }
+
+  .quiz-feedback {
+    font-size: 54px;
+  }
+
+  .abacus-container {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .abacus-title {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .abacus-step {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .abacus-close {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+
+  .abacus-nav-button {
+    padding: 8px 12px;
+    font-size: 16px;
+    min-width: 40px;
+  }
+}
