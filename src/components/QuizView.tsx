@@ -63,17 +63,7 @@ function QuizView() {
     }
   };
 
-  const getAbacusColumns = (type: QuizType): number => {
-    const maxDigits = getMaxAnswerDigits(type);
-    return Math.min(maxDigits, 6);
-  };
-
   const generateNewQuestion = () => {
-    let n1 = 0;
-    let n2 = 0;
-    let op: '+' | '×' = '+';
-    let answer = 0;
-
     if (quizType === 'mix') {
       const randomType = ['2+2', '3+3', '2x2', '3x2'][Math.floor(Math.random() * 4)] as QuizType;
       generateQuestionByType(randomType);
